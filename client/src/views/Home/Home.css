@@ -1,0 +1,61 @@
+body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+  div#root{
+    height: 100%;
+  }
+
+
+  .bg {
+    background-image: url("../../assets/abstract-plexus-background-with-connected-lines-dots-plexus-geometric-effect-digital-data-visualization-futuristic-technology-style-low-poly-element-design-vector-illustration_230610-657.jpg");
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .content{
+    padding-bottom: 100px;
+    margin-bottom: 100px;
+  }
+
+  .home-form h1{
+    color: black; font-family: 'Lato', sans-serif; font-size: 70px; font-weight: 300; line-height: 58px; margin: 0 0 58px;
+    /* padding: 50px; */
+    margin-bottom: 30px;
+  }
+
+  .form-label{
+    color: black; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 25px; line-height: 26px; text-indent: 30px;
+    margin-left: -25px;
+  }
+
+  .home-center{
+    display: table;
+    height: 100%;
+    width: 100%;
+  }
+
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  #button{
+    margin-top: 10px;
+    margin-left: 40%;
+    padding: 10px 30px;
+  }
+/* 
+.main{
+  display: flex;
+  width: 50%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+} */
