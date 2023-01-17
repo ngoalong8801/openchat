@@ -8,6 +8,7 @@ import NotFound from './views/NotFound/NotFound';
 import { useSelector, useDispatch } from 'react-redux'
 import { newUser } from './store/Reducers/User/userSlice'
 import { RootState } from './store/store';
+import Chat1 from './views/Chat1/Chat1';
 function App() {
   const user = useSelector((state: RootState) => state.user)
   
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path='/chat1' element={<Chat1 />} />
             <Route element={<NotFound/>} />
           </Routes>
       </BrowserRouter>

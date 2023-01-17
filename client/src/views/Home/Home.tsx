@@ -20,7 +20,7 @@ function Home() {
               <Form onSubmit={(e) => {
                 e.preventDefault()
                 dispatch(newUser(user))
-                navigate("/chat")
+                navigate("/chat1")
               }} 
               className="home-form">
                 <h1>Welcome you to visit Open Chat</h1>
@@ -37,21 +37,6 @@ function Home() {
         </Container>
       </div>
     </div>
-
-
-    // <Container className="h-100 bg">
-    //   <Row className="main h-100 justify-content-center ">
-    //     <Form method="post" action="/users/new" className="">
-    //       <h1>Welcome you to visit Open Chat</h1>
-    //       <Form.Label htmlFor="username">Typing your name for joining with us:</Form.Label>
-    //       <Form.Control
-    //         type="text"
-    //         id="username"
-    //       /> 
-    //       <Button type="submit" variant="info">Join</Button>
-    //     </Form>
-    //   </Row>
-    // </Container>
   );
 
 }
