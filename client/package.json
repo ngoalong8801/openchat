@@ -13,6 +13,7 @@
     "@types/react-dom": "^18.0.0",
     "bootstrap": "^5.2.3",
     "bulma": "^0.9.4",
+    "fs": "^0.0.1-security",
     "mdb-react-ui-kit": "^5.1.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
@@ -46,5 +47,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  }, "browser": {
+    "crypto": false,
+    "fs": false,
+    "path": false,
+    "os": false,
+    "net": false,
+    "stream": false,
+    "tls": false
+    }
 }

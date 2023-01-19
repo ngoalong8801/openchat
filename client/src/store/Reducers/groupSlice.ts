@@ -1,9 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { fetchAllGroups, Group } from '../../api/groupApiMock'
 import  {RootState } from '../store'
 import { resolve } from 'path'
 import { Action } from '@remix-run/router'
+import groupApi from '../../api/groupApi'
+import { group } from 'console'
+
+export interface Group {
+    id: number,
+    name: string,
+    description: string,
+    image: string
+}
 
 interface GroupState {
     groups: Group[],
@@ -18,36 +26,20 @@ const initialState: GroupState = {
 
 
 export const fetchGroups = createAsyncThunk('groups/fetchGroups', async() => {
-    const response = await new Promise((resolve) => {
-        setTimeout(() => resolve([
-            {
-                name: "Group 1",
-                description: "fist group"
-            },
-            {
-                name: "Group 2",
-                description: "fist group"
-            },
-            {
-                name: "Group 3",
-                description: "fist group"
-            }] as Group[]), 1000);
-    });
-
-    return (response) as Group[]
+    const response = await groupApi.get('/groups/all')
+    return (response.data) as Group[]
 })
 
 
 export const addGroup  = createAsyncThunk<Group, Group>('groups/addGroup', async(group) => {
-    const response = await new Promise((resolve) => {
-        setTimeout(() => resolve(
-            {
-                name: group.name,
-                description: group.description
-            }as Group), 1000);
-    });
+    const response = await groupApi.post('/groups/add', group)
+    return (response.data) as Group
+})
 
-    return (response) as Group
+
+export const deleteGroup  = createAsyncThunk<number, number>('groups/deleteGroup', async(id: number) => {
+    const response = await groupApi.post('/groups/delete', id)
+    return response.data as number
 })
 
 
@@ -68,6 +60,10 @@ const groupsSlice = createSlice({
 
         builder.addCase(addGroup.fulfilled, (state, action) => {
             state.groups.push(action.payload)
+        });
+
+        builder.addCase(deleteGroup.fulfilled, (state, action) => {
+            state.groups = state.groups.filter(group => group.id != action.payload)
         });
     },
   

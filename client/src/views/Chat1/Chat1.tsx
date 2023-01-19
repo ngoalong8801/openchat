@@ -2,12 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, ListGroup, Row, Modal } from "react-bootstrap";
 import {Trash} from "react-bootstrap-icons"
 import Form from 'react-bootstrap/Form';
-import { Group } from "../../api/groupApiMock";
-import { useAppDispatch, useAppSelector } from "../../store/hook";
-import {fetchGroups, selectAllGroups, groupStatus, addGroup} from '../../store/Reducers/groupSlice'
+import {Group} from '../../store/Reducers/groupSlice'
+import { useAppDispatch, useAppSelector} from "../../store/hook";
+import {fetchGroups, selectAllGroups, groupStatus, addGroup, deleteGroup} from '../../store/Reducers/groupSlice'
+import generatePic from "../../utils/helpers/generatePic";
 
 function Chat1() {
     const [show, setShow] = useState(false);
+    const [dltModal, setDltModal] = useState(false);
+    const handleDltShow = (id: number) => () =>{
+        setDltModal(true);
+        setDltID(id)
+    }
+    const handleDltClose = () => setDltModal(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const dispatch = useAppDispatch()
@@ -16,17 +23,28 @@ function Chat1() {
     
     const [gname, setGname] = useState("")
     const [gDesc, setGDesc] = useState("")
-    const addGroupState : any = () => {
-        dispatch(addGroup({name: gname, description: gDesc} as Group))
+
+    const [dltID, setDltID] = useState(0)
+
+    const addGroupState = () => {
+        dispatch(addGroup({name: gname, description: gDesc, image: generatePic().url} as Group))
         handleClose()
     }
+
+
+    const deleteGroupById = () => {
+        dispatch(deleteGroup(dltID))
+        handleDltClose()
+    }
+   
 
     useEffect(() => {
         if(groupsStatus === 'idle'){
             dispatch(fetchGroups())
         }
+        
     }, [dispatch, groupsStatus])
-
+    
     return (
         <Container fluid className="py-3 h-100" style={{ backgroundColor: 'rgb(238, 238, 238)', }}>
             <Modal show={show} onHide={handleClose}>
@@ -63,6 +81,23 @@ function Chat1() {
                 </Modal.Footer>
             </Modal>
 
+            <Modal show={dltModal} onHide={handleDltClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete Group</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Do you want to delete this group
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleDltClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={deleteGroupById}>
+                        Confirm
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             <Row className="h-100 mb-3">
                 <Col lg="5" md="6" className="h-100">
                     <h3 className="font-weight-bold mb-3 text-center text-lg-start">Group</h3>
@@ -80,14 +115,14 @@ function Chat1() {
                                     <a href="#" className="d-flex justify-content-between">
                                         <div className="d-flex w-100">
                                             <img
-                                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMJplxupey2YZYWtoPFeVkIUqkwhYa_MeeJw&usqp=CAU"
+                                                src={group.image}
                                                 alt="group-chat"
                                                 width="70"
                                                 height="60"
                                                 className="me-3"
                                             />
                                             <h5 className="mt-3">{group.name}</h5>
-                                            <Button variant="default" className="ms-auto">
+                                            <Button onClick={handleDltShow(group.id)} variant="default" className="ms-auto">
                                                 <Trash size="20" color="red"></Trash>
                                             </Button>
                                         </div>
