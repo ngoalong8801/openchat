@@ -5,6 +5,7 @@ import { newUser, logOut } from '../../store/Reducers/User/userSlice'
 import { RootState } from '../../store/store';
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import './Navbar.css'
+import logo  from '../../assets/3d-quote-bubble-chat-with-open-space-wood-plank-wall_509562-341.webp'
 function Navbar(){
   const user = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
@@ -18,9 +19,12 @@ function Navbar(){
       aria-label="main navigation"
     >
     <div className="container-fluid">
-      <a className="navbar-brand" href="#"><h2>Open Chat</h2></a>
+      <div className="d-flex align-items-center">
+        <img className="mx-1 me-4 rounded border border-secondary" src={logo} alt="avt-brand" width='50' height='50' />
+        <a className="navbar-brand" href="#"><h2>Open Chat</h2></a>
+      </div>
+      
       <div>
-
       <Form onSubmit={(e) => {
         e.preventDefault()
         dispatch(logOut())

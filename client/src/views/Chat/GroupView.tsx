@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef} from "react";
 import { Button, Card, Col, Container, ListGroup, Row, Modal } from "react-bootstrap";
 import {Trash} from "react-bootstrap-icons"
 import Form from 'react-bootstrap/Form';
@@ -6,8 +6,10 @@ import {Group} from '../../store/Reducers/groupSlice'
 import { useAppDispatch, useAppSelector} from "../../store/hook";
 import {fetchGroups, selectAllGroups, groupStatus, addGroup, deleteGroup} from '../../store/Reducers/groupSlice'
 import generatePic from "../../utils/helpers/generatePic";
+import group from '../../assets/group.json'
+import { GroupProps } from "./Chat";
 
-function Chat1() {
+const GroupView = ({callback} : GroupProps) => {
     const [show, setShow] = useState(false);
     const [dltModal, setDltModal] = useState(false);
     const handleDltShow = (id: number) => () =>{
@@ -27,7 +29,7 @@ function Chat1() {
     const [dltID, setDltID] = useState(0)
 
     const addGroupState = () => {
-        dispatch(addGroup({name: gname, description: gDesc, image: generatePic().url} as Group))
+        dispatch(addGroup({name: gname, description: gDesc, image: generatePic(group).url} as Group))
         handleClose()
     }
 
@@ -44,10 +46,10 @@ function Chat1() {
         }
         
     }, [dispatch, groupsStatus])
-    
+
     return (
-        <Container fluid className="py-3 h-100" style={{ backgroundColor: 'rgb(238, 238, 238)', }}>
-            <Modal show={show} onHide={handleClose}>
+        <>
+        <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add new group</Modal.Title>
                 </Modal.Header>
@@ -97,10 +99,7 @@ function Chat1() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-            <Row className="h-100 mb-3">
-                <Col lg="5" md="6" className="h-100">
-                    <h3 className="font-weight-bold mb-3 text-center text-lg-start">Group</h3>
+        <h3 className="font-weight-bold mb-3 text-center text-lg-start">Group</h3>
                     <Card className="mb-7 h-100 bottom-1">
                         <div className="d-flex mt-2 me-2 justify-content-end pe-2">
                             <Button onClick={handleShow} className="align-self-center" variant="secondary">
@@ -112,7 +111,7 @@ function Chat1() {
                                 {groups.map((group, index) => {
                                     return (
                                     <ListGroup.Item key={index} as="li" className="p-2 border-bottom">
-                                    <a href="#" className="d-flex justify-content-between">
+                                    <a href="#" className="d-flex justify-content-between" onClick={() => callback(group.id)}>
                                         <div className="d-flex w-100">
                                             <img
                                                 src={group.image}
@@ -135,67 +134,8 @@ function Chat1() {
                             </ListGroup>
                         </Card.Body>
                     </Card>
-                </Col>
-                <Col lg="7" md="6" className="h-100 mt-5">
-                    <Card className="h-100">
-                        <ListGroup as="ul" className="h-100">
-                            <ListGroup.Item as="li" className="d-flex justify-content-between mb-4">
-                                <img
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbBAwK3hV1W9YiLeJPzzJ0MufbPStwi3r_Tw&usqp=CAU"
-                                    alt="avatar"
-                                    width="90"
-                                    height="100"
-                                    className="me-3 rounded-circle"
-                                />
-                                <Card className="flex-grow-1">
-                                    <Card.Header className="d-flex justify-content-between p-1">
-                                        <p className="fw-bold mb-0">Taranka</p>
-                                        <p className="fa fa-clock mb-0">
-                                            <i>12 minutes ago</i>
-                                        </p>
-                                    </Card.Header>
-                                    <Card.Body>
-                                        <p>ada</p>
-                                    </Card.Body>
-                                </Card>
-                            </ListGroup.Item>
-                            <ListGroup.Item as="li" className="d-flex justify-content-between mb-4">
-
-                                <Card className="flex-grow-1">
-                                    <Card.Header className="d-flex justify-content-between p-1">
-                                        <p className="fw-bold mb-0">Ronaldo</p>
-                                        <p className="fa fa-clock mb-0">
-                                            <i>12 minutes ago</i>
-                                        </p>
-                                    </Card.Header>
-                                    <Card.Body>
-                                        <p>ada</p>
-                                    </Card.Body>
-                                </Card>
-
-                                <img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg"
-                                    alt="avatar"
-                                    width="90"
-                                    height="100"
-                                    className="ms-3 rounded-circle"
-                                />
-                            </ListGroup.Item>
-
-                            <ListGroup.Item className="mt-auto">
-                                <Form>
-                                    <Form.Group className="mb-3 d-flex flex-column" controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control as="textarea" rows={3} />
-                                        <Button variant="secondary" className="align-self-end m-2">Send</Button>
-                                    </Form.Group>
-                                </Form>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
-    );
+                    </>
+    )
 }
 
-export default Chat1
+export default GroupView

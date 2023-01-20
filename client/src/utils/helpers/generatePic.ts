@@ -1,9 +1,11 @@
-import groups from '../../assets/group.json'
-const generatePic = () => {
-    let len = groups.length
+export interface ImageJson{
+    url: string
+}
+const generatePic = (json: ImageJson[]) => {
+    let len = json.length
     let index = Math.floor(Math.random() * len)
 
-    return groups[index]
+    return json[index]
 }
 
 export default generatePic

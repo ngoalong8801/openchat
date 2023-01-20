@@ -2,13 +2,12 @@ import React from 'react';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Home from './views/Home/Home';
-import Chat from './views/Chat/Chat';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, redirect, Navigate,  } from 'react-router-dom';
 import NotFound from './views/NotFound/NotFound';
 import { useSelector, useDispatch } from 'react-redux'
 import { newUser } from './store/Reducers/User/userSlice'
 import { RootState } from './store/store';
-import Chat1 from './views/Chat1/Chat1';
+import Chat from './views/Chat/Chat';
 function App() {
   const user = useSelector((state: RootState) => state.user)
   
@@ -17,9 +16,9 @@ function App() {
       <BrowserRouter>
         {user.name !== "" && <Navbar/>}
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path='/chat1' element={<Chat1 />} />
+            {user.name == "" && <Route path="/" element={<Home />} />}
+            {user.name !== "" && <Route path="/" element={<Navigate to="/chat" />} />  }
+            <Route path='/chat' element={<Chat />} />
             <Route element={<NotFound/>} />
           </Routes>
       </BrowserRouter>

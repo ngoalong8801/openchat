@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import './Home.css'
 import {  useDispatch } from 'react-redux'
-import { newUser } from '../../store/Reducers/User/userSlice'
+import { newUser, UserState } from '../../store/Reducers/User/userSlice'
 import { useNavigate } from "react-router-dom";
-
+import generatePic from "../../utils/helpers/generatePic";
+import avatar from '../../assets/avatar.json'
 function Home() {
   const dispatch = useDispatch()
   const [user, setUser] = useState("");
@@ -19,8 +20,11 @@ function Home() {
             <Col>
               <Form onSubmit={(e) => {
                 e.preventDefault()
-                dispatch(newUser(user))
-                navigate("/chat1")
+                dispatch(newUser({
+                  name: user,
+                  image: generatePic(avatar).url
+                } as UserState))
+                navigate("/chat")
               }} 
               className="home-form">
                 <h1>Welcome you to visit Open Chat</h1>
