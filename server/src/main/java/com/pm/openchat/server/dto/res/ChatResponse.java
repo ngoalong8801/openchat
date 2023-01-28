@@ -3,13 +3,15 @@ package com.pm.openchat.server.dto.res;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
-public class MessageResponse {
+public class ChatResponse {
     private String userName;
-    private String message;
     private String image;
-    private LocalDateTime time;
+    private String message;
+
+    private Timestamp time;
+
 }

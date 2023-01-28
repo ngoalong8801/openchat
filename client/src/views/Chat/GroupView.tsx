@@ -47,7 +47,16 @@ const GroupView = ({callback} : GroupProps) => {
     }, [dispatch, groupsStatus])
 
     useEffect(() => {
-        callback((groups.length >=1) ? groups[0].id : 0);
+        let id: number
+        let name: string
+        if(groups.length >= 1){
+            id = groups[0].id
+            name = groups[0].name
+        }else{
+            id = 0
+            name = ""
+        }
+        callback(id,name)
     }, [groups])
 
     return (
@@ -114,7 +123,7 @@ const GroupView = ({callback} : GroupProps) => {
                                 {groups.map((group, index) => {
                                     return (
                                     <ListGroup.Item key={index} as="li" className="p-2 border-bottom">
-                                    <a href="#" className="d-flex justify-content-between" onClick={() => callback(group.id)}>
+                                    <a href="#" className="d-flex justify-content-between" onClick={() => callback(group.id, group.name)}>
                                         <div className="d-flex w-100">
                                             <img
                                                 src={group.image}

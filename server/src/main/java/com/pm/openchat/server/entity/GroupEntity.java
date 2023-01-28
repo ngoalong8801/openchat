@@ -2,6 +2,11 @@ package com.pm.openchat.server.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 public class GroupEntity {
     @Id
@@ -13,6 +18,9 @@ public class GroupEntity {
     @Column(length = 1000)
     private String image;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade=CascadeType.ALL,orphanRemoval=true)
+    private List<ChatRoomEntity> chats = new ArrayList<>();
+
     public String getImage() {
         return image;
     }
@@ -22,6 +30,13 @@ public class GroupEntity {
     }
 
 
+    public List<ChatRoomEntity> getChats() {
+        return chats;
+    }
+
+    public void setChats(List<ChatRoomEntity> chats) {
+        this.chats = chats;
+    }
 
     public Integer getId() {
         return id;
