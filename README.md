@@ -10,7 +10,7 @@ yarn start
 ```
 ### For server side:
 You need to create database with name is openchat using database management MYSQL.
-Some remained configured put into **server/src/main/resources**
+Some remained configuration put into **server/src/main/resources**
 ### Final
 After completed set up you can launch this app on **localhost:3000**
 ## Demo
