@@ -44,8 +44,11 @@ const GroupView = ({callback} : GroupProps) => {
         if(groupsStatus === 'idle'){
             dispatch(fetchGroups())
         }
-        
     }, [dispatch, groupsStatus])
+
+    useEffect(() => {
+        callback((groups.length >=1) ? groups[0].id : 0);
+    }, [groups])
 
     return (
         <>

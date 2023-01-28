@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-
 export interface UserState {
     name: string,
     image: string
 }
 const username = window.localStorage.getItem("username")
 const image = window.localStorage.getItem("avatar")
+
 
 const initialState: UserState = {
     name: username ? username : "",
@@ -25,6 +25,7 @@ export const userSlice = createSlice({
         logOut: (state) => {
             state.name = ""
             window.localStorage.setItem("username", "")
+            window.localStorage.setItem("avatar", "")
         }
     }
 })

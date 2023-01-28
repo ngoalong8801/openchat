@@ -24,7 +24,8 @@ function Home() {
                   name: user,
                   image: generatePic(avatar).url
                 } as UserState))
-                navigate("/chat")
+                navigate('/chat')
+                window.location.reload()
               }} 
               className="home-form">
                 <h1>Welcome you to visit Open Chat</h1>
