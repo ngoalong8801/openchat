@@ -7,4 +7,5 @@ public class MessageRequest {
     private String userName;
     private String message;
     private String image;
+    private int roomId;
 }

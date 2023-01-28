@@ -4,17 +4,20 @@ import Form from 'react-bootstrap/Form';
 import GroupView from "./GroupView";
 import Message from "./Message";
 export interface GroupProps {
-    callback: (groupName: number) => void
+    callback: (groupId: number, groupName: string ) => void
 }
 
 export interface MessageProps{
     curGroup : number | undefined
+    curGroupName: string | undefined
 }
 
 function Chat() {
     const [curGroup, setCurGroup] = useState<number>()
-    const callback = (groupID: number) => {
+    const [curGroupName, setCurGroupName] = useState<string>()
+    const callback = (groupID: number, name: string) => {
         setCurGroup(groupID)
+        setCurGroupName(name)
     }
 
     return (
@@ -24,7 +27,7 @@ function Chat() {
                     <GroupView callback={callback} />
                 </Col>
                 <Col lg="7" md="6" className="h-100 mt-5">
-                   <Message curGroup={curGroup} /> 
+                   <Message curGroup={curGroup} curGroupName={curGroupName} /> 
                 </Col>
             </Row>
         </Container>

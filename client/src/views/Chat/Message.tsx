@@ -6,6 +6,7 @@ import SockJS from 'sockjs-client';
 import { IMessage, Stomp, StompSubscription } from "@stomp/stompjs";
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from "../../store/store";
+import groupApi from "../../api/groupApi";
 const socket = new SockJS('http:localhost:8080/ws')
 const stompClient = Stomp.over(socket)
 
@@ -13,6 +14,7 @@ interface MessageRequest {
     userName: string
     image: string
     message: string
+    roomId: number
 }
 
 function sendMessage(message: MessageRequest, curGroup: number | undefined){
@@ -36,7 +38,7 @@ interface MessageRes {
     time: string
 }
 
-const Message = ({curGroup} : MessageProps) => {
+const Message = ({curGroup, curGroupName} : MessageProps) => {
     const user = useSelector((state: RootState) => state.user)
     const messagesEndRef = useRef<HTMLAnchorElement | null>(null);;
     const scrollToBottom = () => {
@@ -62,12 +64,24 @@ const Message = ({curGroup} : MessageProps) => {
             console.log("DATA RECEIVED")
             setMessages(mes => [...mes, data])
     }
-   
+
     useEffect(() => {
         scrollToBottom()
     }, [messages])
 
      useEffect(() => {
+        const fetchChat = async () => {
+            try{
+                const res = await groupApi.get(`chat/${curGroup}`);
+                const data = res.data as MessageRes[]
+                setMessages(data)
+            }
+            catch(error){
+                console.log(error)
+            }
+        }
+
+        fetchChat()
        if(conn){
         stompClient.unsubscribe(id)
         let newID  = stompClient.subscribe(`/topic/chat/${curGroup}`, handleResponse).id;
@@ -75,12 +89,11 @@ const Message = ({curGroup} : MessageProps) => {
        }else{
         connect(curGroup)
        }
-        
     }, [curGroup])
 
     return (
         <Card className="h-100">
-                <div>{curGroup}</div>
+                <h3>{curGroupName}</h3>
                         <ListGroup as="ul" className="h-100 overflow-scroll">
                             {messages.map(mes => {
                                 return (<ListGroup.Item as="li" className="d-flex justify-content-between mb-4">
@@ -117,7 +130,8 @@ const Message = ({curGroup} : MessageProps) => {
                                         <Button onClick={() => {
                                             sendMessage({userName: user.name,
                                                         image: user.image,
-                                                        message: message
+                                                        message: message,
+                                                        roomId: curGroup
                                                     } as MessageRequest, curGroup)
                                         }} variant="secondary" className="align-self-end m-2">Send</Button>
                                     </Form.Group>
