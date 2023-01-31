@@ -23,10 +23,10 @@ function Chat() {
     return (
         <Container fluid className="py-3 h-100" style={{ backgroundColor: 'rgb(238, 238, 238)', }}>
             <Row className="h-100 mb-3">
-                <Col lg="5" md="6" className="h-100">
+                <Col lg="5" md="6" className="group">
                     <GroupView callback={callback} />
                 </Col>
-                <Col lg="7" md="6" className="h-100 mt-5">
+                <Col lg="7" md="6" className="h-100 message"  >
                    <Message curGroup={curGroup} curGroupName={curGroupName} /> 
                 </Col>
             </Row>

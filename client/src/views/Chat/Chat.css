@@ -1,0 +1,26 @@
+.group{
+    height: 100% !important;
+}
+
+.message{
+    margin-top: 3rem;
+ }
+
+@media (max-width: 576px) {
+ .avatar{
+    height: 70px;
+    width: 70px;
+ } 
+
+ .time{
+    font-size: 10px;
+ }
+
+ .group{
+    height: min-content !important;
+ }
+
+ .message{
+    margin-top: 10px !important;
+ }
+  }

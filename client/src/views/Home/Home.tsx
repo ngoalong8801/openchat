@@ -29,7 +29,7 @@ function Home() {
               }} 
               className="home-form">
                 <h1>Welcome you to visit Open Chat</h1>
-                <Form.Label htmlFor="username">Typing your name for joining with us:</Form.Label>
+                <Form.Label className="label" htmlFor="username">Typing your name for joining with us:</Form.Label>
                 <Form.Control
                   type="text"
                   id="username"

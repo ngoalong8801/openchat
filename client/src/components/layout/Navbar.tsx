@@ -18,18 +18,18 @@ function Navbar(){
       role="navigation"
       aria-label="main navigation"
     >
-    <div className="container-fluid">
-      <div className="d-flex align-items-center">
+    <div className="container-fluid w-100">
+      <div className="d-flex align-items-center brand">
         <img className="mx-1 me-4 rounded border border-secondary" src={logo} alt="avt-brand" width='50' height='50' />
         <a className="navbar-brand" href="#"><h2>Open Chat</h2></a>
       </div>
       
-      <div>
+      <div className="info">
       <Form onSubmit={(e) => {
         e.preventDefault()
         dispatch(logOut())
         navigate("/");
-      }} className="d-inline-flex align-items-center justify-content-center">
+      }} className="d-inline-flex align-items-center info info-form">
         <h4 id="username">{user.name} </h4>
         <Button type="submit" variant="secondary" >Log out</Button>
       </Form>

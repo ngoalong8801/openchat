@@ -112,13 +112,13 @@ const GroupView = ({callback} : GroupProps) => {
                 </Modal.Footer>
             </Modal>
         <h3 className="font-weight-bold mb-3 text-center text-lg-start">Group</h3>
-                    <Card className="mb-7 h-100 bottom-1">
+                    <Card className="mb-7 bottom-1 group">
                         <div className="d-flex mt-2 me-2 justify-content-end pe-2">
                             <Button onClick={handleShow} className="align-self-center" variant="secondary">
                                 <i className="bi bi-plus"><span style={{ fontSize: '20px' }}>+</span></i>
                             </Button>
                         </div>
-                        <Card.Body>
+                        <Card.Body className="group">    
                             <ListGroup as="ul">
                                 {groups.map((group, index) => {
                                     return (

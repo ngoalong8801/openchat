@@ -7,7 +7,9 @@ import { IMessage, Stomp, StompSubscription } from "@stomp/stompjs";
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from "../../store/store";
 import groupApi from "../../api/groupApi";
-const socket = new SockJS('http:localhost:8080/ws')
+import './Chat.css'
+const url = process.env.REACT_APP_WS_ENDPOINT
+const socket = new SockJS(url)
 const stompClient = Stomp.over(socket)
 
 interface MessageRequest {
@@ -101,13 +103,13 @@ const Message = ({curGroup, curGroupName} : MessageProps) => {
                                     src={mes.image}
                                     alt="avatar"
                                     height="100"
-                                    className="me-3 rounded-circle"
+                                    className="me-3 rounded-circle avatar"
                                 />
                                 <Card className="flex-grow-1">
                                     <Card.Header className="d-flex justify-content-between p-1">
                                         <p className="fw-bold mb-0">{mes.userName}</p>
-                                        <p className="fa fa-clock mb-0">
-                                            <i>12 minutes ago</i>
+                                        <p className="fa fa-clock mb-0 time">
+                                            <i>now</i>
                                         </p>
                                     </Card.Header>
                                     <Card.Body>
@@ -126,13 +128,14 @@ const Message = ({curGroup, curGroupName} : MessageProps) => {
                         <Card.Footer className="mt-auto">
                                 <Form>
                                     <Form.Group className="mb-3 d-flex flex-column" controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control as="textarea" rows={3} onChange={(e) => {setMessage(e.target.value)}} />
+                                        <Form.Control as="textarea" rows={3} value={message} onChange={(e) => {setMessage(e.target.value)}} />
                                         <Button onClick={() => {
                                             sendMessage({userName: user.name,
                                                         image: user.image,
                                                         message: message,
                                                         roomId: curGroup
                                                     } as MessageRequest, curGroup)
+                                            setMessage("")
                                         }} variant="secondary" className="align-self-end m-2">Send</Button>
                                     </Form.Group>
                                 </Form>
